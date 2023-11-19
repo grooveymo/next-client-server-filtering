@@ -119,3 +119,25 @@ const data = [
       "department": "Health & Medcare",
       "employeeType": "Permanent"
     }];
+
+import { PrismaClient } from "@prisma/client";
+let db = new PrismaClient();
+
+// REMOVE THIS
+async function demo() {
+
+  const promises = data.map((item) => {
+    return db.user.create({
+      data : {...item}
+    }),
+  });
+  return Promise.all(promises);
+
+}
+
+async function seed() {
+  demo();
+
+}
+
+seed();
