@@ -1,5 +1,8 @@
-"components": "@/components",
-"utils": "@/lib/utils"
+# Seeding the db
+ 1. Ensure that 'npx prisma generate' has run
+ 2. Run: '$ npx prisma db seed'
+
+# original readme
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
