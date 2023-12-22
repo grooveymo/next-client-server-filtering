@@ -1,6 +1,13 @@
+# Install CVA
+See: https://cva.style/docs/getting-started/installation
+
+
 # Seeding the db
- 1. Ensure that 'npx prisma generate' has run
- 2. Run: '$ npx prisma db seed'
+
+1.  Ensure that 'npx prisma generate' has run
+2.  Run: '$ npx prisma db seed'
+
+# ----------------------------------------------------------------------------
 
 # original readme
 
