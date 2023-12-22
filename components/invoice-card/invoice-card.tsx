@@ -21,7 +21,7 @@ const InvoiceCard = ({
   status,
 }: InvoiceCardProps) => {
   return (
-    <div className="border border-gray-200 rounded-md bg-gray-50 text-slate-900 flex flex-row justify-between w-[800px] h-[100px] p-10 hover:-translate-y-3 transition-all">
+    <div className="border border-gray-200 rounded-md bg-gray-50 text-slate-900 flex flex-row justify-between w-[800px] h-[100px] p-10 hover:scale-105 transition-all">
       <div className="font-bold">{id}</div>
       <div>{name}</div>
       <div className="text-zinc-600">{GBP.format(value)}</div>
