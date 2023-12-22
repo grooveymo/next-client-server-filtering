@@ -132,16 +132,55 @@ async function setupUsers() {
     })
   );
 
-  // const promisesx = data.map((item) => {
-  //   return db.user.create({
-  //     data : {...item}
-  //   }),
-  // });
   return Promise.all(promises);
 }
 
+function formatDate(date: Date): string {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/month/{year}`;
+}
+const statuses = ['draft', 'pending', 'paid', 'overdue'];
+const generateStatus = () => {
+  const randomIndex = Math.floor(Math.random() * statuses.length);
+  return statuses[randomIndex];
+};
+async function setupInvoices() {
+  const data = Array.from({ length: 100 }, (_, index) => ({
+    name: `Invoice ${index + 1}`,
+    value: Math.random() * 1000,
+    dueDate: formatDate(new Date()),
+    status: generateStatus(), // Set initial status to pending
+  }));
+
+  const promises = data.map((item) =>
+    db.invoice.create({
+      data: { ...item },
+    })
+  );
+
+  return Promise.all(promises);
+
+  // await db.invoice.createMany({
+  //   data: Array.from({ length: 100 }, (_, index) => ({
+  //   name: Invoice ${index + 1},
+  //   value: Math.random() * 1000, // Generate random value between 0 and 1000
+  //   dueDate: formatDate(new Date()), // Format current date as dd/mm/yyyy
+  //   status: 'pending', // Set initial status to pending
+  //   })),
+  //   });
+  //   console.log('Seeded 100 invoices successfully!');
+  //   } catch (error) {
+  //   console.error('Error seeding invoices:', error);
+  //   } finally {
+  //   await prisma.$disconnect();
+  //   }
+}
+
 async function seed() {
-  setupUsers();
+  // setupUsers();
+  setupInvoices();
 }
 
 seed();

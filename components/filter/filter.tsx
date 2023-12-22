@@ -9,7 +9,7 @@ const Filter = () => {
         </div>
         <div data-testid="quick filter" className="mt-8 flex flex-col">
           <h2 className="text-2xl font-bold align-middle mb-4">Filter</h2>
-          <div className="flex align-middle flex-col gap-6 justify-between w-[400px]">
+          <div className="ml-4 flex align-middle flex-col gap-6 justify-between w-[400px]">
             <div>Draft</div>
             <div>Pending</div>
             <div>Paid</div>
