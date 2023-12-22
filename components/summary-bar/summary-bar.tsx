@@ -3,7 +3,7 @@ export interface SummaryBarProps {
 }
 const SummaryBar = ({ numberOfInvoices }: SummaryBarProps) => {
   return (
-    <div className="flex justify-center items-center mb-16">
+    <div className="flex justify-center items-center mb-4">
       <span className="text-2xl font-bold text-cyan-400">
         Number of Invoices: {numberOfInvoices}
       </span>
