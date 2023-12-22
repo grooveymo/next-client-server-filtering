@@ -1,4 +1,5 @@
 import InvoiceCard from '@/components/invoice-card/invoice-card';
+import SummaryBar from '@/components/summary-bar/summary-bar';
 import { InvoiceStatus } from '@/types/invoice-status';
 import { PrismaClient } from '@prisma/client';
 
@@ -15,6 +16,7 @@ export default async function ClientPage() {
   return (
     <div>
       <h1>Client Page</h1>
+      <SummaryBar numberOfInvoices={data?.length} />
       <div className="flex items-center justify-center flex-col gap-4 ">
         {data?.map((invoice) => (
           <InvoiceCard
