@@ -5,21 +5,21 @@ import { InvoiceStatus } from '@/types/invoice-status';
 
 const BadgeVariants = cva(
   /* badge base style */
-  'rounded rounded-md shadow-md w-[100px] text-center',
+  'rounded rounded-lg shadow-md w-[100px] text-center py-4 -mt-4',
   {
     variants: {
       /* badge colors */
       intent: {
         draft:
-          'bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300 hover:bg-yellow-900',
+          'bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 dark:bg-yellow-900 dark:text-yellow-300 hover:bg-yellow-900',
         pending:
-          'bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 hover:bg-red-600',
-        paid: 'bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300 hover:bg-green-900',
+          'bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 dark:bg-blue-900 dark:text-blue-300 hover:bg-red-600',
+        paid: 'bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 dark:bg-green-900 dark:text-green-300 hover:bg-green-900',
         overdue:
-          'bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300 hover:bg-red-600',
+          'bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 dark:bg-red-900 dark:text-red-300 hover:bg-red-600',
       },
 
-      /* bage roundness */
+      /* badge roundness */
       roundness: {
         square: 'rounded-none',
         round: 'rounded-md',

@@ -16,7 +16,7 @@ const InvoiceCard = ({
   status,
 }: InvoiceCardProps) => {
   return (
-    <div className="border border-gr rounded-md ">
+    <div className="border border-gray-200 rounded-md bg-gray-50 text-slate-900 flex flex-row justify-between w-[800px] h-[100px] p-10">
       <div>{id}</div>
       <div>{name}</div>
       <div>{value}</div>
