@@ -1,11 +1,32 @@
 import InvoiceCard from '@/components/invoice-card/invoice-card';
+import { InvoiceStatus } from '@/types/invoice-status';
+import { PrismaClient } from '@prisma/client';
 
-export default function ClientPage() {
+let db = new PrismaClient();
+
+const fetchInvoices = async () => {
+  const data = await db.invoice.findMany({});
+  console.log('>>> data: ', data);
+  return data;
+};
+
+export default async function ClientPage() {
+  const data = await fetchInvoices();
   return (
     <div>
       <h1>Client Page</h1>
       <div className="flex items-center justify-center flex-col gap-4 ">
-        <InvoiceCard
+        {data?.map((invoice) => (
+          <InvoiceCard
+            key={invoice.id}
+            id={`INV-${invoice.id}`}
+            name={invoice.name}
+            value={Number(invoice.value)}
+            dueDate={invoice.dueDate}
+            status={invoice.status as InvoiceStatus}
+          />
+        ))}
+        {/* <InvoiceCard
           id="INV001"
           name="name"
           value={100}
@@ -32,7 +53,7 @@ export default function ClientPage() {
           value={400}
           dueDate="2023-04-12"
           status="overdue"
-        />
+        /> */}
       </div>
     </div>
   );
