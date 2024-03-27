@@ -8,7 +8,17 @@ export const dynamic = 'force-dynamic'; // defaults to auto
  * Route Handler for /api/invoices
  */
 export async function GET(request: Request) {
-  const data = await db.invoice.findMany({});
-  console.log('>>> Server: data: ', data);
+  const url = new URL(request.url);
+  const filters = url.searchParams.get('filters')?.split(',');
+  console.log('🚀 ~ GET ~ filters:', filters);
+
+  const data = await db.invoice.findMany({
+    where: {
+      status: {
+        in: filters,
+      },
+    },
+  });
+  //   console.log('>>> Server: data: ', data);
   return Response.json({ data });
 }

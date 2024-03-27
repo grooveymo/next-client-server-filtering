@@ -1,37 +1,43 @@
 'use client';
 import InvoiceCard from '@/components/invoice-card/invoice-card';
 import SummaryBar from '@/components/summary-bar/summary-bar';
+import { FilterForm } from '@/types/filter-form';
 import { InvoiceStatus } from '@/types/invoice-status';
 import { Invoice, PrismaClient } from '@prisma/client';
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // let db = new PrismaClient();
 
-const fetchInvoices = async () => {
+const fetchInvoices = async (filterForm: FilterForm) => {
   // const data = await db.invoice.findMany({});
-  const response = await fetch('http://localhost:3000/api/invoices');
+  const response = await fetch(`http://localhost:3000/api/invoices?filters=${filterForm.status}`);
 
   const data = await response.json();
-  console.log('>>> Client data: ', data);
+  console.log('>>> Client fetchInvoices filterForm: ', filterForm);
+  console.log('>>> Client fetchInvoices data: ', data);
   return data;
 };
 
 export default function ClientPage() {
-  const [filterSet, setFilterSet] = useState([]);
-  const queryParams = useSearchParams().get('filters')?.split(',');
+  const [filterForm, setFilterForm] = useState<FilterForm>({});
+  const queryParams = useSearchParams().get('filters'); //?.split(',');
+  const searchParams = useSearchParams().get('search');
   console.log('🚀 ~ ClientPage ~ pathname:', queryParams);
 
   useEffect(() => {
     console.log(`Route changed to: ${queryParams}`);
-    // setFilterSet(queryParams);
+    setFilterForm({
+      status: queryParams?.split(',') as InvoiceStatus[],
+      search: '', //searchParams?.get('search')[0],
+    });
   }, [queryParams]);
 
   // use react query to fetch data
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['invoices'],
-    queryFn: async () => await fetchInvoices(),
+    queryKey: ['invoices', filterForm],
+    queryFn: async () => await fetchInvoices(filterForm),
   });
 
   return (
