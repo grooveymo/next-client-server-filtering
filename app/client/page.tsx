@@ -8,13 +8,21 @@ import { queryOptions, useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-// let db = new PrismaClient();
-
 const fetchInvoices = async (filterForm: FilterForm) => {
-  // const data = await db.invoice.findMany({});
+  const queryParams = new URLSearchParams();
+
+  if (filterForm.status) {
+    queryParams.append('filters', filterForm.status.join(','));
+  }
+  if (filterForm.search) {
+    queryParams.append('search', filterForm.search);
+  }
   const response = await fetch(
-    `http://localhost:3000/api/invoices?filters=${filterForm.status}&search=${filterForm.search}`
+    `http://localhost:3000/api/invoices?${queryParams.toString()}`
   );
+  // const response = await fetch(
+  //   `http://localhost:3000/api/invoices?filters=${filterForm.status}&search=${filterForm.search}`
+  // );
 
   const data = await response.json();
   console.log('>>> Client fetchInvoices filterForm: ', filterForm);
