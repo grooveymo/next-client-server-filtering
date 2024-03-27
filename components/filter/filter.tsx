@@ -45,11 +45,13 @@ const FormSchema = z.object({
 });
 
 const Filter = () => {
+  const router = useRouter();
+
+  // check if the url state contains filters
   const queryParams = useSearchParams().get('filters');
   console.log('🚀 ~ XXX - queryParams', queryParams);
 
-  const router = useRouter();
-
+  // access the form state
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -61,6 +63,7 @@ const Filter = () => {
     },
   });
 
+  // set the form state based on the url state (consider user may hit back button - we want the filters to be in sync)
   useEffect(() => {
     console.log('🚀 ~ YYY - queryParams', queryParams);
     form.reset({
@@ -71,13 +74,14 @@ const Filter = () => {
     });
   }, [queryParams, form]);
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  // submit handler - updates url state based on form state
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
     console.log('>>> onSubmit => data: ', data);
     router.push(
       `/client?filters=${data.items.join()}&search=${data?.search}`,
       undefined
     );
-  }
+  };
   return (
     <div className="flex flex-col justify-center">
       <div className="mx-8 border border-slate-100 rounded-2xl p-8 flex flex-col justify-between w-[250px]">
