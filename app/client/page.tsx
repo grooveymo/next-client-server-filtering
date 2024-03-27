@@ -4,18 +4,30 @@ import SummaryBar from '@/components/summary-bar/summary-bar';
 import { InvoiceStatus } from '@/types/invoice-status';
 import { Invoice, PrismaClient } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 // let db = new PrismaClient();
 
 const fetchInvoices = async () => {
   // const data = await db.invoice.findMany({});
   const response = await fetch('http://localhost:3000/api/invoices');
+
   const data = await response.json();
   console.log('>>> Client data: ', data);
   return data;
 };
 
 export default function ClientPage() {
+  const [filterSet, setFilterSet] = useState([]);
+  const queryParams = useSearchParams().get('filters')?.split(',');
+  console.log('🚀 ~ ClientPage ~ pathname:', queryParams);
+
+  useEffect(() => {
+    console.log(`Route changed to: ${queryParams}`);
+    // setFilterSet(queryParams);
+  }, [queryParams]);
+
   // use react query to fetch data
   const { data, isLoading, isError } = useQuery({
     queryKey: ['invoices'],
