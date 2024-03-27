@@ -12,7 +12,9 @@ import { useEffect, useState } from 'react';
 
 const fetchInvoices = async (filterForm: FilterForm) => {
   // const data = await db.invoice.findMany({});
-  const response = await fetch(`http://localhost:3000/api/invoices?filters=${filterForm.status}`);
+  const response = await fetch(
+    `http://localhost:3000/api/invoices?filters=${filterForm.status}&search=${filterForm.search}`
+  );
 
   const data = await response.json();
   console.log('>>> Client fetchInvoices filterForm: ', filterForm);
@@ -25,14 +27,16 @@ export default function ClientPage() {
   const queryParams = useSearchParams().get('filters'); //?.split(',');
   const searchParams = useSearchParams().get('search');
   console.log('🚀 ~ ClientPage ~ pathname:', queryParams);
+  console.log('🚀 ~ ClientPage ~ searchParams:', searchParams);
 
   useEffect(() => {
-    console.log(`Route changed to: ${queryParams}`);
+    console.log(`Route changed to queryParams: ${queryParams}`);
+    console.log(`Route changed to searchParams: ${searchParams}`);
     setFilterForm({
       status: queryParams?.split(',') as InvoiceStatus[],
-      search: '', //searchParams?.get('search')[0],
+      search: searchParams || '',
     });
-  }, [queryParams]);
+  }, [queryParams, searchParams]);
 
   // use react query to fetch data
   const { data, isLoading, isError } = useQuery({

@@ -55,7 +55,10 @@ const Filter = () => {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log('>>> onSubmit => data: ', data);
-    router.push(`/client?filters=${data.items.join()}`, undefined);
+    router.push(
+      `/client?filters=${data.items.join()}&search=${data?.search}`,
+      undefined
+    );
   }
   return (
     <div className="flex flex-col justify-center">
