@@ -51,7 +51,7 @@ const Filter = () => {
 
   // check if the url state contains filters
   const queryParams = useSearchParams().get('filters');
-  console.log('🚀 ~ XXX - queryParams', queryParams);
+  console.log('[Filter] => queryParams', queryParams);
 
   // access the form state
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -67,7 +67,7 @@ const Filter = () => {
 
   // set the form state based on the url state (consider user may hit back button - we want the filters to be in sync)
   useEffect(() => {
-    console.log('🚀 ~ YYY - queryParams', queryParams);
+    console.log('[Filter] => queryParams', queryParams);
     form.reset({
       items: queryParams
         ? queryParams?.split(',')
@@ -78,7 +78,7 @@ const Filter = () => {
 
   // submit handler - updates url state based on form state
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    console.log('>>> onSubmit => data: ', data);
+    console.log('[Filter] => onSubmit => data: ', data);
     router.push(
       `/${
         pathname === 'client' ? 'client' : 'server'

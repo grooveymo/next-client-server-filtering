@@ -11,7 +11,7 @@ let db = new PrismaClient();
 const fetchInvoices = async (filterForm: FilterForm) => {
   let data;
   if (filterForm.status || filterForm.search) {
-    console.log('🚀 ~ RSC2 ~ criteria', filterForm);
+    console.log('[ServerPage] => criteria', filterForm);
 
     data = await db.invoice.findMany({
       where: {
@@ -24,7 +24,7 @@ const fetchInvoices = async (filterForm: FilterForm) => {
       },
     });
   } else {
-    console.log('🚀 ~ RSC2 ~ no criteria');
+    console.log('[ServerPage] =>  no criteria');
     data = await db.invoice.findMany({});
   }
 
@@ -38,8 +38,8 @@ export default async function ServerPage({
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  console.log('🚀 ~ ServerPage ~ params:', params);
-  console.log('🚀 ~ ServerPage ~ searchParams:', searchParams);
+  console.log('[ServerPage] => params:', params);
+  console.log('[ServerPage] => searchParams:', searchParams);
   
   const data = await fetchInvoices({
     status: searchParams.filters
@@ -47,7 +47,7 @@ export default async function ServerPage({
     : [],
     search: searchParams.search as string,
   });
-  console.log('🚀 ~ ServerPage ~ data:', data);
+  console.log('[ServerPage] => data:', data);
   return (
     <div>
       <h1>Server Page</h1>

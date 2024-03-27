@@ -25,8 +25,8 @@ const fetchInvoices = async (filterForm: FilterForm) => {
   // );
 
   const data = await response.json();
-  console.log('>>> Client fetchInvoices filterForm: ', filterForm);
-  console.log('>>> Client fetchInvoices data: ', data);
+  console.log('[ClientPage] => fetchInvoices => filterForm: ', filterForm);
+  console.log('[ClientPage] => fetchInvoices data: ', data);
   return data;
 };
 
@@ -34,12 +34,10 @@ export default function ClientPage() {
   const [filterForm, setFilterForm] = useState<FilterForm>({});
   const queryParams = useSearchParams().get('filters'); //?.split(',');
   const searchParams = useSearchParams().get('search');
-  console.log('🚀 ~ ClientPage ~ pathname:', queryParams);
-  console.log('🚀 ~ ClientPage ~ searchParams:', searchParams);
+  console.log('[ClientPage] =>  pathname:', queryParams);
+  console.log('[ClientPage] =>  searchParams:', searchParams);
 
   useEffect(() => {
-    console.log(`Route changed to queryParams: ${queryParams}`);
-    console.log(`Route changed to searchParams: ${searchParams}`);
     setFilterForm({
       status: queryParams?.split(',') as InvoiceStatus[],
       search: searchParams || '',
