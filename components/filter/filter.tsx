@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '../ui/input';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const items = [
@@ -46,6 +46,8 @@ const FormSchema = z.object({
 
 const Filter = () => {
   const router = useRouter();
+
+  const pathname = usePathname();
 
   // check if the url state contains filters
   const queryParams = useSearchParams().get('filters');
@@ -78,7 +80,9 @@ const Filter = () => {
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     console.log('>>> onSubmit => data: ', data);
     router.push(
-      `/client?filters=${data.items.join()}&search=${data?.search}`,
+      `/${
+        pathname === 'client' ? 'client' : 'server'
+      }?filters=${data.items.join()}&search=${data?.search}`,
       undefined
     );
   };
