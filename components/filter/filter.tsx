@@ -15,7 +15,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '../ui/input';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const items = [
   {
@@ -44,14 +45,31 @@ const FormSchema = z.object({
 });
 
 const Filter = () => {
+  const queryParams = useSearchParams().get('filters');
+  console.log('🚀 ~ XXX - queryParams', queryParams);
+
   const router = useRouter();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       items: ['draft', 'pending', 'paid', 'overdue'],
+      // items: queryParams
+      //   ? queryParams?.split(',')
+      //   : ['draft', 'pending', 'paid', 'overdue'],
       search: '',
     },
   });
+
+  useEffect(() => {
+    console.log('🚀 ~ YYY - queryParams', queryParams);
+    form.reset({
+      items: queryParams
+        ? queryParams?.split(',')
+        : ['draft', 'pending', 'paid', 'overdue'],
+      search: '',
+    });
+  }, [queryParams, form]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log('>>> onSubmit => data: ', data);
