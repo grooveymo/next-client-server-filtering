@@ -48,7 +48,7 @@ const Filter = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      items: ['overdue'],
+      items: ['draft', 'pending', 'paid', 'overdue'],
       search: '',
     },
   });
