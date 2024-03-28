@@ -17,6 +17,7 @@ import {
 import { Input } from '../ui/input';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import path from 'path';
 
 const items = [
   {
@@ -78,14 +79,20 @@ const Filter = () => {
 
   // submit handler - updates url state based on form state
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    console.log('[Filter] => onSubmit => data: ', data);
-    router.push(
-      `/${
-        pathname === 'client' ? 'client' : 'server'
-      }?filters=${data.items.join()}&search=${data?.search}`,
-      undefined
+    const url = new URL(
+      `/${pathname === 'client' ? 'client' : 'server'}`,
+      window.location.href
     );
+
+    if (data?.items?.length) {
+      url.searchParams.append('filters', data?.items.join());
+    }
+    if (data?.search) {
+      url.searchParams.append('search', data?.search);
+    }
+    router.push(url.href, undefined);
   };
+
   return (
     <div className="flex flex-col justify-center">
       <div className="mx-8 border border-slate-100 rounded-2xl p-8 flex flex-col justify-between w-[250px]">

@@ -40,14 +40,14 @@ export default async function ServerPage({
 }) {
   console.log('[ServerPage] => params:', params);
   console.log('[ServerPage] => searchParams:', searchParams);
-  
+
   const data = await fetchInvoices({
     status: searchParams.filters
-    ? ((searchParams.filters as string).split(',') as InvoiceStatus[])
-    : [],
+      ? ((searchParams.filters as string).split(',') as InvoiceStatus[])
+      : [],
     search: searchParams.search as string,
   });
-  console.log('[ServerPage] => data:', data);
+  console.log('[ServerPage] => data.length:', data?.length);
   return (
     <div>
       <h1>Server Page</h1>
