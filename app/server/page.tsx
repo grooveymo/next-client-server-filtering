@@ -5,6 +5,7 @@ import { InvoiceStatus } from '@/types/invoice-status';
 import { Invoice } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import { PrismaClient } from '@prisma/client';
+import InvoicesList from '@/components/invoices-list/InvoicesList';
 
 let db = new PrismaClient();
 
@@ -49,21 +50,6 @@ export default async function ServerPage({
   });
   console.log('[ServerPage] => data.length:', data?.length);
   return (
-    <div>
-      <h1>Server Page</h1>
-      <SummaryBar numberOfInvoices={data?.length} />
-      <div className="flex items-center justify-center flex-col gap-4 ">
-        {data?.map((invoice: Invoice) => (
-          <InvoiceCard
-            key={invoice.id}
-            id={`INV-${invoice.id}`}
-            name={invoice.name}
-            value={Number(invoice.value)}
-            dueDate={invoice.dueDate}
-            status={invoice.status as InvoiceStatus}
-          />
-        ))}
-      </div>
-    </div>
+    <InvoicesList title='Server Page' data={data} />
   );
 }

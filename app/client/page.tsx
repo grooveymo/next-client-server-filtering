@@ -1,5 +1,6 @@
 'use client';
 import InvoiceCard from '@/components/invoice-card/invoice-card';
+import InvoicesList from '@/components/invoices-list/InvoicesList';
 import SummaryBar from '@/components/summary-bar/summary-bar';
 import { FilterForm } from '@/types/filter-form';
 import { InvoiceStatus } from '@/types/invoice-status';
@@ -50,22 +51,5 @@ export default function ClientPage() {
     queryFn: async () => await fetchInvoices(filterForm),
   });
 
-  return (
-    <div>
-      <h1>Client Page</h1>
-      <SummaryBar numberOfInvoices={data?.data?.length} />
-      <div className="flex items-center justify-center flex-col gap-4 ">
-        {data?.data?.map((invoice: Invoice) => (
-          <InvoiceCard
-            key={invoice.id}
-            id={`INV-${invoice.id}`}
-            name={invoice.name}
-            value={Number(invoice.value)}
-            dueDate={invoice.dueDate}
-            status={invoice.status as InvoiceStatus}
-          />
-        ))}
-      </div>
-    </div>
-  );
+  return <InvoicesList title="Server Page" data={data?.data} />;
 }
