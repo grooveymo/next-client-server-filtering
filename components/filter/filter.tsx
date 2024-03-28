@@ -80,7 +80,7 @@ const Filter = () => {
   // submit handler - updates url state based on form state
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     const url = new URL(
-      `/${pathname === 'client' ? 'client' : 'server'}`,
+      `/${pathname === '/client' ? 'client' : 'server'}`,
       window.location.href
     );
 
