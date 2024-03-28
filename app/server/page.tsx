@@ -44,7 +44,7 @@ export default async function ServerPage({
   const data = await fetchInvoices({
     status: searchParams.filters
       ? ((searchParams.filters as string).split(',') as InvoiceStatus[])
-      : [],
+      : ['draft', 'pending', 'paid', 'overdue'],
     search: searchParams.search as string,
   });
   console.log('[ServerPage] => data.length:', data?.length);
