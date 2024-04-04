@@ -11,12 +11,11 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const filters = url.searchParams.get('filters')?.split(',');
   const search = url.searchParams.get('search') || undefined;
-  console.log('[RouteHandler] GET ~ filters:', filters);
-  console.log('[RouteHandler] GET ~ search:', search);
+
+  console.log('[RouteHandler] GET ~ filters:', filters, request.url);
 
   let data;
   if (filters || search) {
-    console.log('[RouteHandler] GET ~ has criteria', url.searchParams.get('filters'));
     data = await db.invoice.findMany({
       where: {
         status: {
@@ -28,19 +27,8 @@ export async function GET(request: Request) {
       },
     });
   } else {
-    console.log('[RouteHandler] GET ~ no criteria');
     data = await db.invoice.findMany({});
   }
-  //   const data = await db.invoice.findMany({
-  //     where: {
-  //       status: {
-  //         in: filters,
-  //       },
-  //         name: {
-  //             contains: search,
-  //         },
-  //     },
-  //   });
-  //   //   console.log('>>> Server: data: ', data);
+  console.log('[RouteHandler]  Server: data: ', data?.length);
   return Response.json({ data });
 }
