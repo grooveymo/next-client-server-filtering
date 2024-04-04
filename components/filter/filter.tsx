@@ -52,7 +52,7 @@ const Filter = () => {
 
   // check if the url state contains filters
   const queryParams = useSearchParams().get('filters');
-  console.log('[Filter] => queryParams', queryParams);
+  // console.log('[Filter] => queryParams', queryParams);
 
   // access the form state
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -68,7 +68,7 @@ const Filter = () => {
 
   // set the form state based on the url state (consider user may hit back button - we want the filters to be in sync)
   useEffect(() => {
-    console.log('[Filter] => queryParams', queryParams);
+    // console.log('[Filter] => queryParams', queryParams);
     form.reset({
       items: queryParams
         ? queryParams?.split(',')
