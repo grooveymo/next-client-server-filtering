@@ -16,8 +16,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '../ui/input';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import path from 'path';
+import { useEffect } from 'react';
 
 const items = [
   {
@@ -80,7 +79,13 @@ const Filter = () => {
   // submit handler - updates url state based on form state
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     const url = new URL(
-      `/${pathname === '/client' ? 'client' : 'server'}`,
+      `/${
+        pathname === '/prefetched-client'
+          ? 'prefetched-client'
+          : pathname === '/client'
+          ? 'client'
+          : 'server'
+      }`,
       window.location.href
     );
 
@@ -90,7 +95,9 @@ const Filter = () => {
     if (data?.search) {
       url.searchParams.append('search', data?.search);
     }
-    router.push(url.href, undefined);
+
+    // router.push(url.href, undefined);
+    router.replace(url.href, undefined);
   };
 
   return (

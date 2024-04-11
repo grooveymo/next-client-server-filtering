@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const pathname = usePathname();
-  console.log('🚀 ~ Navbar ~ pathname:', pathname);
+  // console.log('🚀 ~ Navbar ~ pathname:', pathname);
 
   return (
     <Card className="m-8">
@@ -20,6 +20,16 @@ const Navbar = () => {
             }
           >
             Client-side Filtering
+          </Link>
+          <Link
+            href="/prefetched-client"
+            className={
+              pathname === '/prefetched-client'
+                ? 'border rounded-lg border-gray-700 p-4 bg-slate-700'
+                : 'border rounded-lg border-gray-100 p-4 bg-slate-700 opacity-10 hover:opacity-60'
+            }
+          >
+            Prefetched Client-side Filtering
           </Link>
           <Link
             href="/server"

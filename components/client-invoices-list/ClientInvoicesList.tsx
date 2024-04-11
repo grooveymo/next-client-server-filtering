@@ -17,24 +17,30 @@ const fetchInvoices = async (filterForm: FilterForm) => {
   }
   const response = await fetch(
     `http://localhost:3000/api/invoices?${queryParams.toString()}`
+    // `http://localhost:3000/api/invoices?${queryParams.toString()}&test=foo`
   );
   // const response = await fetch(
   //   `http://localhost:3000/api/invoices?filters=${filterForm.status}&search=${filterForm.search}`
   // );
 
   const data = await response.json();
-  console.log('[ClientInvoicesList] => fetchInvoices => filterForm: ', filterForm);
-  console.log('[ClientInvoicesList] => fetchInvoices data: ', data);
+  console.log(
+    '[ClientInvoicesList]XXX => fetchInvoices => filterForm: ',
+    filterForm
+  );
+  console.log('[ClientInvoicesList]XXX => fetchInvoices data: ', data);
   return data;
 };
 
 const ClientInvoicesList = () => {
-  const [filterForm, setFilterForm] = useState<FilterForm>({});
+  const [filterForm, setFilterForm] = useState<FilterForm>({
+    status: undefined,
+    search: '',
+  });
   const queryParams = useSearchParams().get('filters'); //?.split(',');
   const searchParams = useSearchParams().get('search');
-  console.log('[ClientInvoicesList] =>  pathname:', queryParams);
-  console.log('[ClientInvoicesList] =>  searchParams:', searchParams);
 
+  console.log('[ClientInvoicesList]XXX =>  queryParams:', queryParams);
   useEffect(() => {
     setFilterForm({
       status: queryParams?.split(',') as InvoiceStatus[],
@@ -45,8 +51,14 @@ const ClientInvoicesList = () => {
   // use react query to fetch data
   const { data, isLoading, isError } = useQuery({
     queryKey: ['invoices', filterForm],
+    // queryKey: ['invoicesXXX'],
     queryFn: async () => await fetchInvoices(filterForm),
+    staleTime: 5000, // NOTE -required to prevent client refetching data when prefetch has already happened
   });
+  console.log(
+    '[ClientInvoicesList]ZZZ from React Query => data:',
+    data?.data?.length
+  );
 
   return <InvoicesList title="Client Page" data={data?.data} />;
 };
