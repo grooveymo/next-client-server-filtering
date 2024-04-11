@@ -2,7 +2,8 @@
 import InvoicesList from '@/components/invoices-list/InvoicesList';
 import { FilterForm } from '@/types/filter-form';
 import { InvoiceStatus } from '@/types/invoice-status';
-import { useQuery } from '@tanstack/react-query';
+import { Invoice } from '@prisma/client';
+import { QueryClient, useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -25,14 +26,23 @@ const fetchInvoices = async (filterForm: FilterForm) => {
 
   const data = await response.json();
   console.log(
-    '[ClientInvoicesList]XXX => fetchInvoices => filterForm: ',
+    '[ClientInvoicesList] => fetchInvoices => filterForm: ',
     filterForm
   );
-  console.log('[ClientInvoicesList]XXX => fetchInvoices data: ', data);
+  console.log('[ClientInvoicesList] => fetchInvoices data: ', data);
   return data;
 };
 
 const ClientInvoicesList = () => {
+  const queryClient = new QueryClient();
+  console.log(
+    '[ClientInvoicesList]1a >>> Data in Cache : ',
+    queryClient.getQueryData<{ data: Invoice[] }>(['invoices', {}])?.data
+      ?.length,
+    ' <<<'
+  );
+
+  // const [filterForm, setFilterForm] = useState<FilterForm>({});
   const [filterForm, setFilterForm] = useState<FilterForm>({
     status: undefined,
     search: '',
@@ -40,7 +50,6 @@ const ClientInvoicesList = () => {
   const queryParams = useSearchParams().get('filters'); //?.split(',');
   const searchParams = useSearchParams().get('search');
 
-  console.log('[ClientInvoicesList]XXX =>  queryParams:', queryParams);
   useEffect(() => {
     setFilterForm({
       status: queryParams?.split(',') as InvoiceStatus[],
@@ -56,7 +65,7 @@ const ClientInvoicesList = () => {
     staleTime: 5000, // NOTE -required to prevent client refetching data when prefetch has already happened
   });
   console.log(
-    '[ClientInvoicesList]ZZZ from React Query => data:',
+    '[ClientInvoicesList]1b from React Query => data:',
     data?.data?.length
   );
 

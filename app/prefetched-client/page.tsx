@@ -12,7 +12,14 @@ export default async function PrefetchedClientPage() {
   const queryClient = new QueryClient();
   // const queryClient = getQueryClient();
 
-  console.log('>>>1 Start Prefetching Data');
+  console.log('[prefetch]1a >>> Before Prefetching Data');
+  console.log(
+    '[prefetch]1b >>> Data in Cache : ',
+    queryClient.getQueryData<{ data: Invoice[] }>(['invoices', {}])?.data
+      ?.length,
+    ' <<<'
+  );
+
   await queryClient.prefetchQuery({
     // queryKey: ['invoicesXXX'],
     queryKey: ['invoices', {}],
@@ -22,12 +29,13 @@ export default async function PrefetchedClientPage() {
       }) //NOTE: disable cache otw will get more data (100) than expected (20)
         .then(async (response) => {
           const result: { data: Invoice[] } = await response.json();
-          console.log('>>>1a result: ', result?.data?.length);
-
           return result;
         })
         .then((json) => {
-          console.log('>>>1a output: ', json?.data?.length);
+          console.log(
+            '[prefetch]2 after fetch >>> output: ',
+            json?.data?.length
+          );
           return json;
         }),
     // staleTime: 5000, // NOTE -required to prevent client refetching data when prefetch has already happened
@@ -41,14 +49,13 @@ export default async function PrefetchedClientPage() {
     //     }),
   });
 
-  console.log('>>>2 After Prefetching Data');
+  console.log('[prefetch]3 >>> After Prefetching Data');
 
   console.log(
-    '>>>3 Data in Cache : start',
+    '[prefetch]4 >>> Data in Cache : ',
     queryClient.getQueryData<{ data: Invoice[] }>(['invoices', {}])?.data
       ?.length,
-    '>>> Data in Cache : end'
-    // queryClient.getQueryData(['invoicesXXX', filterForm])
+    ' <<<'
   );
 
   return (
