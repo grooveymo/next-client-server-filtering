@@ -10,6 +10,10 @@ import { useEffect, useState } from 'react';
 const queryKey = ['invoicesXXX']; //['invoices', {}];
 
 const fetchInvoices = async (filterForm: FilterForm) => {
+  console.log(
+    '[ClientInvoicesList] => fetchInvoices => calling API endpoint: '
+  );
+
   const queryParams = new URLSearchParams();
 
   if (filterForm.status) {
@@ -64,11 +68,22 @@ const ClientInvoicesList = () => {
     // queryKey: ['invoices', filterForm],
     // queryKey: ['invoicesXXX'],
     queryKey: queryKey,
-    queryFn: async () => await fetchInvoices(filterForm),
+
+    // queryFn: async () => await fetchInvoices(filterForm),
+    queryFn: async ({ queryKey: qKey }) => {
+      // N.B. - this shows that the queryFn is not called when the data is already in cache (invoicesXXX key)
+      const previousDataInCache = queryClient.getQueryData(qKey);
+      console.log(
+        '[ClientInvoicesList]1b from React Query => data:',
+        previousDataInCache
+      );
+      return await fetchInvoices(filterForm);
+    },
+
     staleTime: 5000, // NOTE -required to prevent client refetching data when prefetch has already happened
   });
   console.log(
-    '[ClientInvoicesList]1b from React Query => data:',
+    '[ClientInvoicesList]1c from React Query => data:',
     data?.data?.length
   );
 
