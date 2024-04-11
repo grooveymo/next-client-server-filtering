@@ -7,6 +7,8 @@ import { QueryClient, useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+const queryKey = ['invoicesXXX']; //['invoices', {}];
+
 const fetchInvoices = async (filterForm: FilterForm) => {
   const queryParams = new URLSearchParams();
 
@@ -37,8 +39,8 @@ const ClientInvoicesList = () => {
   const queryClient = new QueryClient();
   console.log(
     '[ClientInvoicesList]1a >>> Data in Cache : ',
-    queryClient.getQueryData<{ data: Invoice[] }>(['invoices', {}])?.data
-      ?.length,
+    // queryClient.getQueryData<{ data: Invoice[] }>(['invoices', {}])?.data
+    queryClient.getQueryData<{ data: Invoice[] }>(queryKey)?.data?.length,
     ' <<<'
   );
 
@@ -59,8 +61,9 @@ const ClientInvoicesList = () => {
 
   // use react query to fetch data
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['invoices', filterForm],
+    // queryKey: ['invoices', filterForm],
     // queryKey: ['invoicesXXX'],
+    queryKey: queryKey,
     queryFn: async () => await fetchInvoices(filterForm),
     staleTime: 5000, // NOTE -required to prevent client refetching data when prefetch has already happened
   });

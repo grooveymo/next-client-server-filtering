@@ -8,6 +8,8 @@ import ClientInvoicesList from '@/components/client-invoices-list/ClientInvoices
 import { Invoice } from '@prisma/client';
 import getQueryClient from './getQueryClient';
 
+const queryKey = ['invoicesXXX']; //['invoices', {}];
+
 export default async function PrefetchedClientPage() {
   const queryClient = new QueryClient();
   // const queryClient = getQueryClient();
@@ -22,7 +24,8 @@ export default async function PrefetchedClientPage() {
 
   await queryClient.prefetchQuery({
     // queryKey: ['invoicesXXX'],
-    queryKey: ['invoices', {}],
+    // queryKey: ['invoices', {}],
+    queryKey: queryKey,
     queryFn: async () =>
       await fetch('http://localhost:3000/api/invoices?origin=prefetchQuery', {
         cache: 'no-cache',
@@ -53,8 +56,8 @@ export default async function PrefetchedClientPage() {
 
   console.log(
     '[prefetch]4 >>> Data in Cache : ',
-    queryClient.getQueryData<{ data: Invoice[] }>(['invoices', {}])?.data
-      ?.length,
+    // queryClient.getQueryData<{ data: Invoice[] }>(['invoices', {}])?.data
+    queryClient.getQueryData<{ data: Invoice[] }>(queryKey)?.data?.length,
     ' <<<'
   );
 
