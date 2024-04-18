@@ -7,6 +7,7 @@ import {
 import ClientInvoicesList from '@/components/client-invoices-list/ClientInvoicesList';
 import { Invoice } from '@prisma/client';
 import getQueryClient from './getQueryClient';
+import { Suspense } from 'react';
 
 // const queryKey = ['invoicesXXX'];
 const queryKey = ['invoices', {}];
@@ -64,7 +65,9 @@ export default async function PrefetchedClientPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ClientInvoicesList />
+      <Suspense fallback={<div>Loading....</div>}>
+        <ClientInvoicesList />
+      </Suspense>
     </HydrationBoundary>
   );
 }
