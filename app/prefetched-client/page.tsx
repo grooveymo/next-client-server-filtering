@@ -8,7 +8,8 @@ import ClientInvoicesList from '@/components/client-invoices-list/ClientInvoices
 import { Invoice } from '@prisma/client';
 import getQueryClient from './getQueryClient';
 
-const queryKey = ['invoicesXXX']; //['invoices', {}];
+// const queryKey = ['invoicesXXX'];
+const queryKey = ['invoices', {}];
 
 export default async function PrefetchedClientPage() {
   const queryClient = new QueryClient();

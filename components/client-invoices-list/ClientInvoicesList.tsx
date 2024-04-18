@@ -7,7 +7,8 @@ import { QueryClient, useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const queryKey = ['invoicesXXX']; //['invoices', {}];
+// const queryKey = ['invoicesXXX'];
+const queryKey = ['invoices', {}];
 
 const fetchInvoices = async (filterForm: FilterForm) => {
   console.log(
@@ -41,11 +42,17 @@ const fetchInvoices = async (filterForm: FilterForm) => {
 
 const ClientInvoicesList = () => {
   const queryClient = new QueryClient();
+  
+
+  const queryCache = queryClient.getQueryCache();
+  const query = queryCache.find({ queryKey: queryKey });
+
   console.log(
     '[ClientInvoicesList]1a >>> Data in Cache : ',
     // queryClient.getQueryData<{ data: Invoice[] }>(['invoices', {}])?.data
     queryClient.getQueryData<{ data: Invoice[] }>(queryKey)?.data?.length,
-    ' <<<'
+    ' <<<',
+    query
   );
 
   // const [filterForm, setFilterForm] = useState<FilterForm>({});
