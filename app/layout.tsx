@@ -1,12 +1,6 @@
 import type { Metadata } from 'next';
-import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
-//👇 Import our second font
 import { Open_Sans, Roboto_Mono } from 'next/font/google';
-
-// import { Inter } from 'next/font/google'
-// const inter = Inter({ subsets: ['latin'] });
-// import { cn } from '../@/lib/utils';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
 import Navbar from '@/components/navbar';
@@ -45,7 +39,6 @@ export default function RootLayout({
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
-          // fontSans.variable
           robotoMono.variable,
           openSans.variable
         )}
