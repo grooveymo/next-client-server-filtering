@@ -10,13 +10,13 @@ const Navbar = () => {
   return (
     <Card className="m-8">
       <CardContent className="flex justify-end">
-        <div className="w-1/4 mt-4 flex justify-between">
+        <div className="w-1/2 mt-4 flex justify-between">
           <Link
             href="/client"
             className={
               pathname === '/client'
                 ? 'border rounded-lg border-gray-700 p-4 bg-slate-700'
-                : 'border rounded-lg border-gray-100 p-4 bg-slate-700 opacity-10 hover:opacity-60'
+                : 'border rounded-lg border-gray-100 p-4 bg-slate-700 opacity-40 hover:opacity-60'
             }
           >
             Client-side Filtering
@@ -26,7 +26,7 @@ const Navbar = () => {
             className={
               pathname === '/prefetched-client'
                 ? 'border rounded-lg border-gray-700 p-4 bg-slate-700'
-                : 'border rounded-lg border-gray-100 p-4 bg-slate-700 opacity-10 hover:opacity-60'
+                : 'border rounded-lg border-gray-100 p-4 bg-slate-700 opacity-40 hover:opacity-60'
             }
           >
             Prefetched Client-side Filtering
@@ -36,7 +36,7 @@ const Navbar = () => {
             className={
               pathname === '/server'
                 ? 'border rounded-lg border-gray-700 p-4 bg-slate-700'
-                : 'border rounded-lg border-gray-100 p-4 bg-slate-700 opacity-10 hover:opacity-60'
+                : 'border rounded-lg border-gray-100 p-4 bg-slate-700 opacity-40 hover:opacity-60'
             }
           >
             Server-side Filtering
